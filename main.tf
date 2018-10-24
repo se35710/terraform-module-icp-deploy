@@ -40,7 +40,7 @@ resource "null_resource" "icp-cluster" {
 
   provisioner "remote-exec" {
     inline = [
-      "yum install -y git"
+      "yum install -y git",
       "cd /tmp",
       "git clone https://github.com/se35710/terraform-module-icp-deploy.git",
       "chmod a+x /tmp/terraform-module-icp-deploy/scripts/common/*",

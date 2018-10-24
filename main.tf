@@ -136,12 +136,6 @@ resource "null_resource" "icp-image" {
 
   # If this is enterprise edition we'll need to copy the image file over and load it in local repository
   // We'll need to find another workaround while tf does not support count for this
-  provisioner "file" {
-    # count = "${var.enterprise-edition ? 1 : 0}"
-    source      = "${var.enterprise-edition ? var.image_file : "/dev/null" }"
-    destination = "/tmp/${basename(var.image_file)}"
-  }
-
   provisioner "remote-exec" {
     inline = [
       "echo \"Loading image ${var.icp-version}\"",

@@ -34,7 +34,7 @@ then
     # Figure out what we should name the file
     filename="ibm-cloud-private-x86_64-${tag%-ee}.tar.gz"
     mkdir -p ${sourcedir}
-    wget --continue -O ${sourcedir}/${filename} "${image_location#http:}"
+    aria2c -x16 -j16 -s16 -o ${sourcedir}/${filename} "${image_location#http:}"
     image_file="${sourcedir}/${filename}"
   fi
 fi

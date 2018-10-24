@@ -45,7 +45,7 @@ else
     # Figure out what we should name the file
     filename="icp-docker.bin"
     mkdir -p ${sourcedir}
-    curl -o ${sourcedir}/${filename} "${package_location#http:}"
+    aria2c -x16 -j16 -s16 -o ${sourcedir}/${filename} "${package_location#http:}"
     package_file="${sourcedir}/${filename}"
   fi
 
@@ -53,7 +53,7 @@ else
   sudo ${package_file} --install
 
   # Make sure our user is added to the docker group if needed
-  /tmp/icp-common-scripts/docker-user.sh
+  /tmp/terraform-module-icp-deploy/scripts/common/docker-user.sh
 
   echo "Install complete..."
   exit 0

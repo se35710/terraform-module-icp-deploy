@@ -40,21 +40,12 @@ resource "null_resource" "icp-cluster" {
 
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p /tmp/icp-common-scripts",
-    ]
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/common/"
-    destination = "/tmp/icp-common-scripts"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod a+x /tmp/icp-common-scripts/*",
-      "/tmp/icp-common-scripts/prereqs.sh",
-      "/tmp/icp-common-scripts/version-specific.sh ${var.icp-version}",
-      "/tmp/icp-common-scripts/docker-user.sh",
+      "cd /tmp",
+      "git clone https://github.com/se35710/terraform-module-icp-deploy.git",
+      "chmod a+x /tmp/terraform-module-icp-deploy/scripts/common/*",
+      "/tmp/terraform-module-icp-deploy/scripts/common/prereqs.sh",
+      "/tmp/terraform-module-icp-deploy/scripts/common/version-specific.sh ${var.icp-version}",
+      "/tmp/terraform-module-icp-deploy/scripts/common/docker-user.sh",
     ]
   }
 }
@@ -118,22 +109,10 @@ resource "null_resource" "icp-docker" {
 
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p /tmp/icp-bootmaster-scripts",
       "sudo mkdir -p /opt/ibm/cluster",
       "sudo chown ${var.ssh_user} /opt/ibm/cluster",
-    ]
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/boot-master/"
-    destination = "/tmp/icp-bootmaster-scripts"
-  }
-
-  # Make sure scripts are executable and docker installed
-  provisioner "remote-exec" {
-    inline = [
-      "chmod a+x /tmp/icp-bootmaster-scripts/*.sh",
-      "/tmp/icp-bootmaster-scripts/install-docker.sh \"${var.docker_package_location}\" ",
+      "chmod a+x /tmp/terraform-module-icp-deploy/scripts/boot-master/*.sh",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/install-docker.sh \"${var.docker_package_location}\" ",
     ]
   }
 }
@@ -163,7 +142,7 @@ resource "null_resource" "icp-image" {
   provisioner "remote-exec" {
     inline = [
       "echo \"Loading image ${var.icp-version}\"",
-      "/tmp/icp-bootmaster-scripts/load-image.sh ${var.icp-version} /tmp/${basename(var.image_file)} \"${var.image_location}\" ",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/load-image.sh ${var.icp-version} /tmp/${basename(var.image_file)} \"${var.image_location}\" "
     ]
   }
 }
@@ -209,10 +188,10 @@ resource "null_resource" "icp-config" {
 
   provisioner "remote-exec" {
     inline = [
-      "/tmp/icp-bootmaster-scripts/copy_cluster_skel.sh ${var.icp-version}",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/copy_cluster_skel.sh ${var.icp-version}",
       "sudo chown ${var.ssh_user} /opt/ibm/cluster/*",
       "chmod 600 /opt/ibm/cluster/ssh_key",
-      "python /tmp/icp-bootmaster-scripts/load-config.py ${var.config_strategy}",
+      "python /tmp/terraform-module-icp-deploy/scripts/boot-master/load-config.py ${var.config_strategy}"
     ]
   }
 
@@ -229,7 +208,7 @@ resource "null_resource" "icp-config" {
       "echo -n ${join(",", var.icp-master)} > /opt/ibm/cluster/masterlist.txt",
       "echo -n ${join(",", var.icp-proxy)} > /opt/ibm/cluster/proxylist.txt",
       "echo -n ${join(",", var.icp-worker)} > /opt/ibm/cluster/workerlist.txt",
-      "echo -n ${join(",", var.icp-management)} > /opt/ibm/cluster/managementlist.txt",
+      "echo -n ${join(",", var.icp-management)} > /opt/ibm/cluster/managementlist.txt"
     ]
   }
 
@@ -255,7 +234,7 @@ resource "null_resource" "icp-generate-hosts-files" {
 
   provisioner "remote-exec" {
     inline = [
-      "/tmp/icp-bootmaster-scripts/generate_hostsfiles.sh",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/generate_hostsfiles.sh"
     ]
   }
 }
@@ -297,7 +276,7 @@ resource "null_resource" "icp-install" {
 
   provisioner "remote-exec" {
     inline = [
-      "/tmp/icp-bootmaster-scripts/start_install.sh ${var.icp-version} ${var.install-verbosity}",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/start_install.sh ${var.icp-version} ${var.install-verbosity}",
     ]
   }
 }
@@ -354,15 +333,10 @@ resource "null_resource" "icp-worker-scaler" {
     destination = "/tmp/scaled-host-groups.json"
   }
 
-  provisioner "file" {
-    source      = "${path.module}/scripts/boot-master/scaleworkers.sh"
-    destination = "/tmp/icp-bootmaster-scripts/scaleworkers.sh"
-  }
-
   provisioner "remote-exec" {
     inline = [
-      "chmod a+x /tmp/icp-bootmaster-scripts/scaleworkers.sh",
-      "/tmp/icp-bootmaster-scripts/scaleworkers.sh ${var.icp-version}",
+      "chmod a+x /tmp/terraform-module-icp-deploy/scripts/boot-master/scaleworkers.sh",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/scaleworkers.sh ${var.icp-version}",
     ]
   }
 }

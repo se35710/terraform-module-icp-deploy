@@ -10,7 +10,7 @@ exec  &> >(tee -a $LOGFILE)
 
 echo "Got first parameter $1"
 package_location=$1
-sourcedir=/tmp/icp-docker
+sourcedir="/tmp/icp-docker"
 
 # TODO: Deal with installation from apt repository for linux
 # Figure out if we're asked to install at all
@@ -45,7 +45,7 @@ else
     # Figure out what we should name the file
     filename="icp-docker.bin"
     mkdir -p ${sourcedir}
-    aria2c -x16 -j16 -s16 -o ${sourcedir}/${filename} "${package_location#http:}"
+    aria2c -x16 -j16 -s16 -o "${sourcedir}/${filename}" "${package_location#http:}"
     package_file="${sourcedir}/${filename}"
   fi
 

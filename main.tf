@@ -40,7 +40,9 @@ resource "null_resource" "icp-cluster" {
 
   provisioner "remote-exec" {
     inline = [
-      "yum install -y git",
+      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+      "subscription-manager repos --enable \"rhel-*-optional-rpms\" --enable \"rhel-*-extras-rpms\"",
+      "yum install -y git aria2",
       "cd /tmp",
       "git clone https://github.com/se35710/terraform-module-icp-deploy.git",
       "chmod a+x /tmp/terraform-module-icp-deploy/scripts/common/*",

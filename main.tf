@@ -40,12 +40,13 @@ resource "null_resource" "icp-cluster" {
 
   provisioner "remote-exec" {
     inline = [
+      "yum install -y git"
       "cd /tmp",
       "git clone https://github.com/se35710/terraform-module-icp-deploy.git",
       "chmod a+x /tmp/terraform-module-icp-deploy/scripts/common/*",
       "/tmp/terraform-module-icp-deploy/scripts/common/prereqs.sh",
       "/tmp/terraform-module-icp-deploy/scripts/common/version-specific.sh ${var.icp-version}",
-      "/tmp/terraform-module-icp-deploy/scripts/common/docker-user.sh",
+      "/tmp/terraform-module-icp-deploy/scripts/common/docker-user.sh"
     ]
   }
 }
@@ -112,7 +113,7 @@ resource "null_resource" "icp-docker" {
       "sudo mkdir -p /opt/ibm/cluster",
       "sudo chown ${var.ssh_user} /opt/ibm/cluster",
       "chmod a+x /tmp/terraform-module-icp-deploy/scripts/boot-master/*.sh",
-      "/tmp/terraform-module-icp-deploy/scripts/boot-master/install-docker.sh \"${var.docker_package_location}\" ",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/install-docker.sh \"${var.docker_package_location}\" "
     ]
   }
 }
@@ -276,7 +277,7 @@ resource "null_resource" "icp-install" {
 
   provisioner "remote-exec" {
     inline = [
-      "/tmp/terraform-module-icp-deploy/scripts/boot-master/start_install.sh ${var.icp-version} ${var.install-verbosity}",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/start_install.sh ${var.icp-version} ${var.install-verbosity}"
     ]
   }
 }
@@ -298,7 +299,7 @@ resource "null_resource" "icp-postinstall-hook" {
   # Run stage hook commands
   provisioner "remote-exec" {
     inline = [
-      "${var.hooks["postinstall"]}",
+      "${var.hooks["postinstall"]}"
     ]
   }
 }
@@ -323,7 +324,7 @@ resource "null_resource" "icp-worker-scaler" {
       "echo -n ${join(",", var.icp-master)} > /tmp/masterlist.txt",
       "echo -n ${join(",", var.icp-proxy)} > /tmp/proxylist.txt",
       "echo -n ${join(",", var.icp-worker)} > /tmp/workerlist.txt",
-      "echo -n ${join(",", var.icp-management)} > /tmp/managementlist.txt",
+      "echo -n ${join(",", var.icp-management)} > /tmp/managementlist.txt"
     ]
   }
 
@@ -336,7 +337,7 @@ resource "null_resource" "icp-worker-scaler" {
   provisioner "remote-exec" {
     inline = [
       "chmod a+x /tmp/terraform-module-icp-deploy/scripts/boot-master/scaleworkers.sh",
-      "/tmp/terraform-module-icp-deploy/scripts/boot-master/scaleworkers.sh ${var.icp-version}",
+      "/tmp/terraform-module-icp-deploy/scripts/boot-master/scaleworkers.sh ${var.icp-version}"
     ]
   }
 }

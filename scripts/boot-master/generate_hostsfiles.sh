@@ -99,7 +99,7 @@ read_from_groupfiles() {
 
 read_from_hostgroups() {
   # First parse the hostgroup json
-  python /tmp/icp-bootmaster-scripts/parse-hostgroups.py
+  python /tmp/terraform-module-icp-deploy/scripts/boot-master/parse-hostgroups.py
 
   # Get the cluster ips
   declare -a cluster_ips

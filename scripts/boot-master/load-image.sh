@@ -10,7 +10,7 @@ image_file=$2
 image_location=$3
 sourcedir=/opt/ibm/cluster/images
 
-source /tmp/icp-bootmaster-scripts/functions.sh
+source /tmp/terraform-module-icp-deploy/scripts/boot-master/functions.sh
 
 
 # Figure out the version

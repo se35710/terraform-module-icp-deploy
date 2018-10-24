@@ -1,5 +1,5 @@
 #!/bin/bash
-source /tmp/icp-bootmaster-scripts/functions.sh
+source /tmp/terraform-module-icp-deploy/scripts/boot-master/functions.sh
 
 # Figure out the version
 # This will populate $org $repo and $tag

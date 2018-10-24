@@ -1,5 +1,5 @@
 #!/bin/bash
-source /tmp/icp-bootmaster-scripts/functions.sh
+source /tmp/terraform-module-icp-deploy/scripts/boot-master/functions.sh
 
 ICPDIR=/opt/ibm/cluster
 NEWLIST=/tmp/workerlist.txt

@@ -33,9 +33,8 @@ then
   then
     # Figure out what we should name the file
     filename="ibm-cloud-private-x86_64-${tag%-ee}.tar.gz"
-    mkdir -p ${sourcedir}
-    aria2c -x16 -j16 -s16 -o ${sourcedir}/${filename} "${image_location#http:}"
-    image_file="${sourcedir}/${filename}"
+    aria2c -x16 -j16 -s16 -o "${filename}" "${image_location#http:}"
+    image_file="/root/${filename}"
   fi
 fi
 

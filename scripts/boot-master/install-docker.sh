@@ -44,7 +44,7 @@ else
   then
     # Figure out what we should name the file
     filename="icp-docker.bin"
-    aria2c -x16 -j16 -s16 -o "/root/${filename}" "${package_location#http:}"
+    aria2c -x16 -j16 -s16 -o "${filename}" "${package_location#http:}"
     package_file="/root/${filename}"
   fi
 

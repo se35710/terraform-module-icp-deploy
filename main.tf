@@ -5,7 +5,7 @@ resource "null_resource" "icp-cluster-preconfig-hook" {
   connection {
     host         = "${element(local.icp-ips, count.index)}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -26,7 +26,7 @@ resource "null_resource" "icp-cluster" {
   connection {
     host         = "${element(local.icp-ips, count.index)}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -67,7 +67,7 @@ resource "null_resource" "icp-cluster-postconfig-hook" {
   connection {
     host         = "${element(local.icp-ips, count.index)}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -89,7 +89,7 @@ resource "null_resource" "icp-boot-preconfig" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -111,7 +111,7 @@ resource "null_resource" "icp-docker" {
   connection {
     host         = "${element(local.icp-ips, count.index)}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -147,7 +147,7 @@ resource "null_resource" "icp-image" {
   connection {
     host         = "${element(local.icp-ips, count.index)}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -176,7 +176,7 @@ resource "null_resource" "icp-boot" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -202,7 +202,7 @@ resource "null_resource" "icp-config" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -248,7 +248,7 @@ resource "null_resource" "icp-generate-hosts-files" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -269,7 +269,7 @@ resource "null_resource" "icp-preinstall-hook" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -290,7 +290,7 @@ resource "null_resource" "icp-install" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -311,7 +311,7 @@ resource "null_resource" "icp-postinstall-hook" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
@@ -334,7 +334,7 @@ resource "null_resource" "icp-worker-scaler" {
   connection {
     host         = "${local.boot-node}"
     user         = "${var.ssh_user}"
-    private_key  = "${local.ssh_key}"
+    private_key  = "${var.ssh_key}"
     agent        = "${var.ssh_agent}"
     bastion_host = "${var.bastion_host}"
   }
